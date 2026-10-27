@@ -1,0 +1,702 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #080808;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+:root {
+    --red: #ff2525;
+    --dark-red: #720000;
+    --black: #080808;
+    --gray: #aaa;
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+    min-height: 85vh;
+    padding: 80px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 50% 0%, #650000 0%, transparent 65%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s ease both;
+}
+
+.tag {
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 4px;
+    margin-bottom: 22px;
+    font-weight: bold;
+}
+
+.hero h1 {
+    font-size: clamp(42px, 8vw, 90px);
+    line-height: 1.05;
+    font-weight: 900;
+    letter-spacing: -2px;
+}
+
+.hero h1 span {
+    color: var(--red);
+    text-shadow: 0 0 30px #ff000055;
+}
+
+.intro {
+    max-width: 520px;
+    color: var(--gray);
+    line-height: 1.8;
+    margin: 25px auto;
+    font-size: 15px;
+}
+
+.main-btn {
+    display: inline-block;
+    padding: 15px 24px;
+    background: var(--red);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: .3s;
+}
+
+.main-btn:hover {
+    background: white;
+    color: #111;
+    transform: translateY(-5px);
+    box-shadow: 0 0 30px #ff000066;
+}
+
+/* Floating background circles */
+.circle {
+    position: absolute;
+    border: 1px solid #ff252522;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: orbit 12s linear infinite;
+}
+
+.circle-one {
+    width: 300px;
+    height: 300px;
+    top: 10%;
+    left: -100px;
+}
+
+.circle-two {
+    width: 200px;
+    height: 200px;
+    bottom: 0;
+    right: -60px;
+    animation-direction: reverse;
+}
+
+@keyframes orbit {
+    from { transform: rotate(0deg) translateY(0); }
+    50% { transform: rotate(180deg) translateY(25px); }
+    to { transform: rotate(360deg) translateY(0); }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== TEAM SECTION ===== */
+#members {
+    padding: 80px 7%;
+    text-align: center;
+}
+
+.section-heading {
+    margin-bottom: 50px;
+}
+
+.section-heading h2 {
+    font-size: clamp(28px, 5vw, 42px);
+    margin-bottom: 18px;
+}
+
+.section-heading h2 span {
+    color: var(--red);
+}
+
+.section-heading > p:last-child {
+    color: var(--gray);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.team {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
+    max-width: 1050px;
+    margin: auto;
+}
+
+/* ===== FLIPPABLE CARDS ===== */
+.card-container {
+    height: 380px;
+    perspective: 1200px;
+    animation: floatCard 4s ease-in-out infinite;
+}
+
+.card-container:nth-child(2) {
+    animation-delay: -1s;
+}
+
+.card-container:nth-child(3) {
+    animation-delay: -2s;
+}
+
+.card-container:nth-child(4) {
+    animation-delay: -3s;
+}
+
+@keyframes floatCard {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Hide checkbox without disabling it */
+.flip-toggle {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+}
+
+.member-card {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform .8s cubic-bezier(.2, .8, .2, 1);
+}
+
+/* Checkbox flips the card */
+.flip-toggle:checked + .member-card .card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-toggle:focus-visible + .member-card .card-face {
+    outline: 2px solid white;
+    outline-offset: 4px;
+}
+
+.card-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 28px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(145deg, #1c1c1c, #0c0c0c);
+    border: 1px solid #ff252544;
+    box-shadow: 0 10px 35px #0008;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: border-color .3s, box-shadow .3s;
+}
+
+.card-face::before {
+    content: "";
+    position: absolute;
+    width: 190px;
+    height: 190px;
+    right: -80px;
+    top: -80px;
+    border-radius: 50%;
+    background: #ff000028;
+    filter: blur(30px);
+    pointer-events: none;
+}
+
+.card-container:hover .card-face {
+    border-color: var(--red);
+    box-shadow: 0 0 35px #ff000033;
+}
+
+.number {
+    position: absolute;
+    top: 22px;
+    left: 22px;
+    color: var(--red);
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.avatar {
+    width: 105px;
+    height: 105px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff3333, #610000);
+    border: 3px solid #ff5555;
+    box-shadow: 0 0 30px #ff000033;
+    font-size: 45px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    transition: transform .4s;
+}
+
+.card-container:hover .avatar {
+    transform: rotate(-8deg) scale(1.08);
+}
+
+.role {
+    color: var(--red);
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.card-face h3 {
+    font-size: clamp(17px, 2.5vw, 23px);
+    line-height: 1.4;
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.surname {
+    color: var(--gray);
+    font-size: 13px;
+    position: relative;
+}
+
+.flip-btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 13px 20px;
+    border: 1px solid var(--red);
+    border-radius: 5px;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: .3s;
+    position: relative;
+}
+
+.flip-btn:hover {
+    background: var(--red);
+    box-shadow: 0 0 20px #ff000055;
+}
+
+/* Back of card */
+.back {
+    transform: rotateY(180deg);
+    background: linear-gradient(145deg, #310606, #101010);
+}
+
+.back .bio {
+    color: #bbb;
+    font-size: 13px;
+    line-height: 1.8;
+    margin: 8px 0 15px;
+    position: relative;
+}
+
+.mini-skills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 7px;
+    position: relative;
+}
+
+.mini-skills span {
+    color: #ff7777;
+    background: #ff252512;
+    border: 1px solid #ff252544;
+    border-radius: 20px;
+    padding: 6px 9px;
+    font-size: 10px;
+}
+
+.resume-btn {
+    position: relative;
+    display: inline-block;
+    padding: 13px 20px;
+    margin-top: 20px;
+    background: var(--red);
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: bold;
+    transition: .3s;
+}
+
+.resume-btn:hover {
+    background: white;
+    color: #111;
+    transform: translateY(-3px);
+}
+
+.flip-back {
+    color: #ff5555;
+    font-size: 10px;
+    margin-top: 15px;
+    cursor: pointer;
+    position: relative;
+    letter-spacing: 1px;
+}
+
+/* ===== RESUME POPUP USING CSS ONLY ===== */
+.resume-section {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #000e;
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .3s, visibility .3s;
+    overflow-y: auto;
+}
+
+.resume-section:target {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.resume-card {
+    width: 100%;
+    max-width: 650px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 40px;
+    position: relative;
+    border: 1px solid var(--red);
+    border-radius: 15px;
+    background: #111;
+    box-shadow: 0 0 50px #ff000022;
+    text-align: left;
+    animation: fadeUp .4s ease;
+}
+
+.resume-card h2 {
+    font-size: clamp(25px, 5vw, 38px);
+    line-height: 1.3;
+    margin: 15px 0;
+    overflow-wrap: anywhere;
+}
+
+.resume-card h2 span {
+    color: var(--red);
+}
+
+.resume-intro {
+    color: #aaa;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+.resume-card h3 {
+    color: var(--red);
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin: 22px 0 10px;
+}
+
+.resume-card > p:not(.tag):not(.resume-intro) {
+    color: #ccc;
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    color: white;
+    text-decoration: none;
+    transition: .3s;
+}
+
+.close-btn:hover {
+    color: var(--red);
+    transform: rotate(90deg);
+}
+
+.resume-card .main-btn {
+    margin-top: 30px;
+}
+
+/* ===== FOOTER ===== */
+footer {
+    padding: 45px 20px;
+    text-align: center;
+    border-top: 1px solid #ffffff15;
+    background: #050505;
+}
+
+footer h3 {
+    font-size: 17px;
+    letter-spacing: 3px;
+}
+
+footer > p:not(.copyright) {
+    margin-top: 12px;
+    color: #888;
+    font-size: 13px;
+}
+
+.copyright {
+    margin-top: 25px;
+    font-size: 10px;
+    color: #555;
+    letter-spacing: 2px;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 650px) {
+    .hero {
+        min-height: 70vh;
+        padding: 70px 20px;
+    }
+
+    .hero h1 {
+        letter-spacing: -1px;
+    }
+
+    #members {
+        padding: 60px 6%;
+    }
+
+    .team {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .card-container {
+        height: 350px;
+    }
+
+    .resume-card {
+        padding: 35px 22px;
+    }
+}
+
+/* Respect reduced-motion settings */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .card-container,
+    .circle,
+    .hero-content {
+        animation: none;
+    }
+
+    .card-inner {
+        transition-duration: .01ms;
+    }
+    /* Member photos */
+
+}
+/* Member photos */
+.member-photo {
+    width: 145px;
+    height: 145px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    border: 3px solid #ff2525;
+    box-shadow: 0 0 25px #ff252555;
+    margin-bottom: 22px;
+    position: relative;
+    transition: transform 0.4s ease,
+                box-shadow 0.4s ease;
+}
+
+.card-container:hover .member-photo {
+    transform: scale(1.08) rotate(-3deg);
+    box-shadow: 0 0 35px #ff252588;
+}
+
+@media (max-width: 650px) {
+    .member-photo {
+        width: 125px;
+        height: 125px;
+    }
+}
+ 
+ .section h3 {
+    font-size: 14px;
+    color: #ff2525;
+    border-bottom: 1px solid black;
+    padding-bottom: 4px;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+.section p {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color:  #bbb;
+}
+
+
+/* Background photo for all resume popups */
+.resume-card {
+    background-image:
+        linear-gradient(
+            rgba(8, 8, 8, 0.75),
+            rgba(8, 8, 8, 0.85)
+        ),
+        url("sibayan.jpg") !important;
+
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+/* Falling red Matrix numbers */
+.matrix-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.45;
+}
+
+.matrix-column {
+    position: absolute;
+    top: -100%;
+    color: #ff2525;
+    font-family: monospace;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.5;
+    white-space: pre;
+    text-shadow: 0 0 5px #ff2525;
+    animation: matrix-fall linear infinite;
+}
+
+.matrix-column:nth-child(1) { left: 5%; animation-duration: 9s; animation-delay: -3s; }
+.matrix-column:nth-child(2) { left: 15%; animation-duration: 12s; animation-delay: -7s; }
+.matrix-column:nth-child(3) { left: 25%; animation-duration: 8s; animation-delay: -2s; }
+.matrix-column:nth-child(4) { left: 35%; animation-duration: 11s; animation-delay: -5s; }
+.matrix-column:nth-child(5) { left: 45%; animation-duration: 10s; animation-delay: -8s; }
+.matrix-column:nth-child(6) { left: 55%; animation-duration: 13s; animation-delay: -4s; }
+.matrix-column:nth-child(7) { left: 65%; animation-duration: 9s; animation-delay: -6s; }
+.matrix-column:nth-child(8) { left: 75%; animation-duration: 12s; animation-delay: -1s; }
+.matrix-column:nth-child(9) { left: 85%; animation-duration: 8s; animation-delay: -4s; }
+.matrix-column:nth-child(10) { left: 95%; animation-duration: 11s; animation-delay: -9s; }
+
+@keyframes matrix-fall {
+    from { transform: translateY(0); }
+    to { transform: translateY(200vh); }
+}
+
+/* Keep content above the animation */
+body > header,
+body > section,
+body > footer {
+    position: relative;
+    z-index: 1;
+}
+
+.resume-section {
+    z-index: 100;
+}
+
+
+/* Modern typography for the entire website */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #080808;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* Futuristic headings */
+.hero h1,
+.section-heading h2,
+.card-face h3,
+.resume-card h2,
+.resume-card h3,
+footer h3 {
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Clean, readable buttons and labels */
+.main-btn,
+.flip-btn,
+.resume-btn,
+.tag,
+.role,
+.number,
+.flip-back {
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Readable descriptions and resume content */
+.intro,
+.bio,
+.surname,
+.resume-intro,
+.resume-card p,
+.section p,
+footer p {
+    font-family: 'Poppins', sans-serif;
+}
